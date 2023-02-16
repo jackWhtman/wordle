@@ -5,10 +5,12 @@ import "./styles.css";
 
 const API_URL = "https://api.frontendexpert.io/api/fe/wordle-words";
 
+
 export default function App() {
   const [randomWord, setRandomWord] = useState(null);
-  const [guesses, setGuesses] = useState(Array(6).fill("abcde"));
-  const [currentGuess, setCurrentGuess] = useState("");
+  const [guesses, setGuesses] = useState(Array(6).fill(''));
+  const [currentGuess, setCurrentGuess] = useState('');
+  const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
 
   useEffect(() => {
     // fetch(API_URL).then(resp=>resp.json()).then(data=>{
@@ -16,25 +18,42 @@ export default function App() {
     // })
     setRandomWord(words[Math.floor(Math.random() * words.length)]);
   }, []);
-
-  useEffect(() => {
-    const handleType = (event) => {
-      console.log(event);
-      setCurrentGuess((prev) => prev + event.key);
+  
+  
+  const handleType = (event) => {
+      if(event.key === 'Enter'){
+        setGuesses((prev)=>{
+          let newGuesses = [...prev];
+          newGuesses[currentGuessIndex] = currentGuess;
+          return newGuesses;
+        });
+        if(currentGuess.length === 5){
+          setCurrentGuessIndex(prev => prev + 1);
+          setCurrentGuess('')
+        }
+      }
+      if(currentGuess.length < 5){
+        setCurrentGuess((prev) => prev + event.key); 
+      }
     };
 
-    window.addEventListener("keydown", handleType);
-    return () => window.removeEventListener("keydown", handleType);
+  useEffect(() => {
+    window.addEventListener('keydown', handleType);
+    return () => window.removeEventListener('keydown', handleType);
   }, [currentGuess]);
 
   return (
     <div className="App" onKeyDown={(e) => handleType(e)}>
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <h1>Wordle</h1>
       {randomWord}
       <div className="board">
         {guesses.map((guess, i) => {
-          return <Line key={i} guess={guess} />;
+          return <Line 
+                  key={i} 
+                  guess={currentGuessIndex === i ? currentGuess : guess} 
+                  randomWord={randomWord}
+                  isCurrentGuess={currentGuessIndex === i}
+          />;
         })}
       </div>
     </div>

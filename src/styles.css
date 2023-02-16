@@ -27,3 +27,15 @@
   align-items: center;
   text-transform: uppercase;
 }
+
+.correct{
+  background-color: lightgreen;
+}
+
+.incorrect{
+  background-color: lightgrey;
+}
+
+.close{
+  background-color: lightyellow;
+}
