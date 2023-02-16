@@ -26,7 +26,7 @@ export default function Line({
       className += 'incorrect';
     }
     tiles.push(
-      <div key={i} >
+      <div key={i} className={isCurrentGuess ? 'tiles' : className}>
         {guess[i]}
       </div>
     );
