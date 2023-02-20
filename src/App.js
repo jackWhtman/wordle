@@ -3,7 +3,7 @@ import Line from "./components/line";
 import words from "./resource/words.json";
 import "./styles.css";
 
-const API_URL = "https://api.frontendexpert.io/api/fe/wordle-words";
+const API_URL = "https://www.wordsUrl.com"; //replace with working URL
 
 
 export default function App() {
