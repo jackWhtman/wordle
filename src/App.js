@@ -7,7 +7,7 @@ const API_URL = "https://api.frontendexpert.io/api/fe/wordle-words";
 
 
 export default function App() {
-  const [randomWord, setRandomWord] = useState(null);
+  const [randomWord, setRandomWord] = useState('');
   const [guesses, setGuesses] = useState(Array(6).fill(''));
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
@@ -31,10 +31,10 @@ export default function App() {
           setCurrentGuessIndex(prev => prev + 1);
           setCurrentGuess('')
         }
-      }
-      if(currentGuess.length < 5){
+      }else if(currentGuess.length < 5 ){
         setCurrentGuess((prev) => prev + event.key); 
       }
+      
     };
 
   useEffect(() => {
