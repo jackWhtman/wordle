@@ -7,7 +7,6 @@ export default function Line({
   }) {
   const tiles = [];
   const getClassName = (char,charIndex)=>{
-    console.log(char,charIndex,randomWord,isCurrentGuess)
     if(!isCurrentGuess && guess !== ''){
       if(randomWord[charIndex]===char){
       return 'correct';
@@ -26,9 +25,8 @@ export default function Line({
     let className = `tiles ${getClassName(guess[i],i)}`;
     
     tiles.push(
-      <div key={`${i} ${guess[i]} ${guess}`} className={isCurrentGuess ? 'tiles' : className}>
+      <div key={i} className={isCurrentGuess ? 'tiles' : className}>
         {guess[i]}
-        {console.log(getClassName(guess[i],i))}
       </div>
     );
   }

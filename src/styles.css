@@ -13,6 +13,43 @@
   gap: 5px;
 }
 
+ @keyframes bounce {
+      /* 0%   {color: red;}
+      25%  {color: yellow;}
+      75%  {color: lightgreen;} */
+      100% {
+            top: 20%;
+            /* color: lightblue; */
+            text-shadow: 0 1px 0 #CCC,
+                0 2px 0 #CCC,
+                0 3px 0 #CCC,
+                0 4px 0 #CCC,
+                0 5px 0 #CCC,
+                0 6px 0 #CCC,
+                0 7px 0 #CCC,
+                0 8px 0 #CCC,
+                0 9px 0 #CCC,
+                0 50px 25px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+.won{
+  font-size: 4rem;
+  position: absolute;
+  top:30%;
+  transform: scale(2);
+  animation: bounce .9s ease infinite alternate;
+}
+
+.reset{
+  color: #f2f2f2;
+  width: 10rem;
+  height: 3rem;
+  margin-top:2rem; 
+  background-color: #1a1aff;
+  border-radius: 5px;
+  border-style: none;
+}
 .line {
   display: flex;
   gap: 5px;
@@ -20,6 +57,7 @@
 
 .tiles {
   border: 2px solid grey;
+  border-radius: 5px;
   width: 50px;
   height: 50px;
   display: flex;
@@ -37,5 +75,5 @@
 }
 
 .close{
-  background-color: lightyellow;
+  background-color: yellow;
 }

@@ -11,6 +11,17 @@ export default function App() {
   const [guesses, setGuesses] = useState(Array(6).fill(''));
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
+  const [won, setWon] = useState(false);
+  const [reset,setReset] = useState(false);
+
+  const resetGame = (event)=>{
+    event.preventDefault();
+    setRandomWord(words[Math.floor(Math.random() * words.length)]);
+    setGuesses(Array(6).fill(''))
+    setCurrentGuess('');
+    setCurrentGuessIndex(0);
+    setWon(false);
+  }
 
   useEffect(() => {
     // fetch(API_URL).then(resp=>resp.json()).then(data=>{
@@ -21,34 +32,40 @@ export default function App() {
   
   
   const handleType = (event) => {
-    let isAlphabhet = event.key.match(/^[a-zA-Z]$/)?.length > 0;
+      let isAlphabhet = event.key.match(/^[a-zA-Z]$/)?.length > 0;
+      // let isWord = words.includes(currentGuess)
       if(event.key === 'Enter'){
-        setGuesses((prev)=>{
+        if(currentGuess.length === 5 && words.includes(currentGuess)){
+          setGuesses((prev)=>{
           let newGuesses = [...prev];
           newGuesses[currentGuessIndex] = currentGuess;
           return newGuesses;
         });
-        if(currentGuess.length === 5){
           setCurrentGuessIndex(prev => prev + 1);
           setCurrentGuess('')
+          if(currentGuess === randomWord){
+            setWon(true);
+          }
         }
-      }else if(currentGuess.length < 5 && isAlphabhet){
+      }else if(currentGuess.length < 5 && isAlphabhet ){
         setCurrentGuess((prev) => prev + event.key.toUpperCase()); 
       }else if(event.key === 'Backspace'){
-        setCurrentGuess(currentGuess.slice[0,-1]); 
+        setCurrentGuess(currentGuess.slice(0,-1)); 
       }
-      
     };
 
   useEffect(() => {
+    if(!won){
     window.addEventListener('keydown', handleType);
     return () => window.removeEventListener('keydown', handleType);
-  }, [currentGuess]);
+    }
+  }, [currentGuess,won]);
 
   return (
     <div className="App" onKeyDown={(e) => handleType(e)}>
       <h1>Wordle</h1>
       {randomWord}
+      <h5>Start typing to make a guess</h5>
       <div className="board">
         {guesses.map((guess, i) => {
           return <Line 
@@ -59,6 +76,8 @@ export default function App() {
           />;
         })}
       </div>
+      {won && <button className={'reset'} onClick={e=>resetGame(e)}>RESET</button>}
+      {won && <h1 className='won'>You Guessed it Right</h1>}
     </div>
   );
 }
