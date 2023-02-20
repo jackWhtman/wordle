@@ -21,6 +21,7 @@ export default function App() {
   
   
   const handleType = (event) => {
+    let isAlphabhet = event.key.match(/^[a-zA-Z]$/)?.length > 0;
       if(event.key === 'Enter'){
         setGuesses((prev)=>{
           let newGuesses = [...prev];
@@ -31,8 +32,10 @@ export default function App() {
           setCurrentGuessIndex(prev => prev + 1);
           setCurrentGuess('')
         }
-      }else if(currentGuess.length < 5 ){
-        setCurrentGuess((prev) => prev + event.key); 
+      }else if(currentGuess.length < 5 && isAlphabhet){
+        setCurrentGuess((prev) => prev + event.key.toUpperCase()); 
+      }else if(event.key === 'Backspace'){
+        setCurrentGuess(currentGuess.slice[0,-1]); 
       }
       
     };
