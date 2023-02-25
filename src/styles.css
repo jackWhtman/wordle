@@ -37,7 +37,6 @@
   font-size: 4rem;
   position: absolute;
   top:30%;
-  transform: scale(2);
   animation: bounce .9s ease infinite alternate;
 }
 
