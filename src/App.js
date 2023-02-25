@@ -71,7 +71,7 @@ export default function App() {
   return (
     <div className="App" onKeyDown={(e) => handleType(e)}>
       <h1>Wordle</h1>
-      {randomWord}
+      {/* {randomWord} */}
       <h5>Start typing to make a guess</h5>
       <div className="board">
         {guesses.map((guess, i) => {
