@@ -21,6 +21,7 @@ export default function App() {
     setCurrentGuess('');
     setCurrentGuessIndex(0);
     setWon(false);
+    setReset(false);
   }
 
   useEffect(() => {
@@ -30,12 +31,18 @@ export default function App() {
     setRandomWord(words[Math.floor(Math.random() * words.length)]);
   }, []);
   
+  useEffect(() => {
+    if(currentGuessIndex > 5){
+        setReset(true);
+      }
+  }, [currentGuessIndex]);
   
   const handleType = (event) => {
       let isAlphabhet = event.key.match(/^[a-zA-Z]$/)?.length > 0;
       // let isWord = words.includes(currentGuess)
       if(event.key === 'Enter'){
-        if(currentGuess.length === 5 && words.includes(currentGuess)){
+        if(currentGuess.length === 5 && words.includes(currentGuess) 
+              && !guesses.includes(currentGuess)){
           setGuesses((prev)=>{
           let newGuesses = [...prev];
           newGuesses[currentGuessIndex] = currentGuess;
@@ -76,7 +83,8 @@ export default function App() {
           />;
         })}
       </div>
-      {won && <button className={'reset'} onClick={e=>resetGame(e)}>RESET</button>}
+      {(won || reset) && <button className={'reset'} onClick={e=>resetGame(e)}>RESET</button>}
+      {reset && <h1 className='won'>Wrong!! <br/> The word is {randomWord}</h1>}
       {won && <h1 className='won'>You Guessed it Right</h1>}
     </div>
   );
